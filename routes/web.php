@@ -217,5 +217,7 @@ Route::middleware(['auth'])->group(function () {
     }
 })->name('mutasi.manual');
 
+});
+
 Route::get('/create-payment', [\App\Http\Controllers\PaymentSettingController::class, 'createPayment']);
 Route::get('/cek-mutasi', [\App\Http\Controllers\PaymentSettingController::class, 'cekMutasi']);
