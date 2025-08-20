@@ -190,14 +190,7 @@
                     <button id="themeToggle" class="text-slate-500 hover:text-slate-800 transition-colors animated-element slide-down delay-600">
                         <i class="fas fa-moon text-lg" id="themeIcon"></i>
                     </button>
-                    <button class="text-slate-500 hover:text-slate-800 transition-colors relative animated-element slide-down delay-700">
-                        <i class="fas fa-heart text-lg"></i>
-                        <span class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-bold">2</span>
-                    </button>
-                    <button class="text-slate-500 hover:text-slate-800 transition-colors relative animated-element slide-down delay-700">
-                        <i class="fas fa-shopping-bag text-lg"></i>
-                        <span class="absolute -top-2 -right-2 bg-indigo-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-bold">3</span>
-                    </button>
+                    
                 </div>
             </div>
         </div>

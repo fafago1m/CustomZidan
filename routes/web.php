@@ -7,6 +7,33 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+if (!function_exists('curlGet')) {
+    /**
+     * Request GET menggunakan cURL dengan User-Agent dan error handling.
+     */
+    function curlGet(string $url): string
+    {
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0');
+        curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+        $response = curl_exec($ch);
+        $err = curl_error($ch);
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+
+        if ($err) {
+            throw new Exception("Curl error: {$err}");
+        }
+
+        if ($httpCode !== 200) {
+            throw new Exception("Request failed with status code {$httpCode}");
+        }
+
+        return $response;
+    }
+}
+
 Route::get('/', function () {
     $produks = Produk::all();
     return view('welcome', compact('produks'));
@@ -45,10 +72,14 @@ Route::post('/beli', function (Request $request) {
     $paymentResponse = null;
 
     if ($setting && $setting->apikey && $setting->codeqr) {
-        $url = "https://apiku-fafa-main.vercel.app/api/orkut/createpayment?apikey=apikeyfafa1&amount={$amount}&codeqr=00020101021126670016COM.NOBUBANK.WWW01189360050300000879140214836503664512180303UMI51440014ID.CO.QRIS.WWW0215ID20232876797160303UMI5204541153033605802ID5923FAFA%20STORE%20ID%20OK13001586006BANTUL61055518162070703A0163044BBE";
+        $apikey = urlencode($setting->apikey);
+        $amountEncoded = urlencode($amount);
+        $codeqrEncoded = urlencode($setting->codeqr);
+
+        $url = "https://apiku-fafa-main.vercel.app/api/orkut/createpayment?apikey=apikeyfafa1&amount={$amountEncoded}&codeqr=00020101021126670016COM.NOBUBANK.WWW01189360050300000879140214823323798771130303UMI51440014ID.CO.QRIS.WWW0215ID20243345208120303UMI5204541153033605802ID5925YULIASARI%20STORE%20OK17633726007BANDUNG61054011162070703A0163048BA9";
 
         try {
-            $response = file_get_contents($url);
+            $response = curlGet($url);
             $paymentResponse = json_decode($response, true);
         } catch (\Exception $e) {
             $paymentResponse = ['error' => 'Gagal request pembayaran: ' . $e->getMessage()];
@@ -68,30 +99,28 @@ Route::get('/invoice/{id}', function ($id) {
     return view('invoice', compact('transaksi', 'payment'));
 })->name('invoice.show');
 
-// ====================================================================
-// PERBAIKAN LOGIKA PADA ROUTE INI
-// ====================================================================
 Route::get('/mutasi-manual/{id}', function ($id) {
-    $transaksi = \App\Models\Transaksi::findOrFail($id);
-    $setting = \App\Models\PaymentSetting::first();
+    $transaksi = Transaksi::findOrFail($id);
+    $setting = PaymentSetting::first();
 
     if (!$setting || !$setting->apikey || !$setting->username || !$setting->token) {
-        // Mengembalikan JSON jika permintaan datang dari AJAX
         if (request()->ajax()) {
             return response()->json(['status' => 'error', 'message' => 'Pengaturan pembayaran belum lengkap.']);
         }
         return redirect()->back()->with('error', 'Pengaturan pembayaran belum lengkap.');
     }
 
-    $url = "https://actressapi.vercel.app/orderkuota/mutasiqr?apikey={$setting->apikey}&username={$setting->username}&token={$setting->token}";
+    $apikey = urlencode($setting->apikey);
+    $username = urlencode($setting->username);
+    $token = urlencode($setting->token);
+
+    $url = "https://actressapi.vercel.app/orderkuota/mutasiqr?apikey={$apikey}&username={$username}&token={$token}";
 
     try {
-        $response = file_get_contents($url);
+        $response = curlGet($url);
         $data = json_decode($response, true);
 
-        // Perbaikan: Pastikan data mutasi ada di 'result'
         if (!isset($data['result']) || empty($data['result'])) {
-             // Mengembalikan JSON untuk AJAX
             if (request()->ajax()) {
                 return response()->json(['status' => 'pending', 'message' => 'Data mutasi kosong.']);
             }
@@ -99,10 +128,8 @@ Route::get('/mutasi-manual/{id}', function ($id) {
         }
 
         foreach ($data['result'] as $mutasi) {
-            // Perbaikan: Ambil nominal dari field 'kredit' dan bersihkan titik
             $nominal = (int) str_replace('.', '', $mutasi['kredit']);
 
-            // Cocokkan nominal mutasi dengan transaksi saat ini
             if (
                 $transaksi->status === 'pending' &&
                 $transaksi->amount == $nominal
@@ -110,24 +137,20 @@ Route::get('/mutasi-manual/{id}', function ($id) {
                 $transaksi->status = 'paid';
                 $transaksi->save();
 
-                // Mengembalikan JSON dengan status 'paid' untuk AJAX
                 if (request()->ajax()) {
                     return response()->json(['status' => 'paid', 'message' => "✅ Transaksi berhasil dibayar."]);
                 }
 
-                // Jika bukan AJAX, kembalikan ke halaman invoice
                 return redirect()->route('invoice.show', $transaksi->id)
                     ->with('success', "✅ Transaksi berhasil dibayar via mutasi sebesar Rp {$nominal}");
             }
         }
 
-        // Jika tidak ada mutasi yang cocok setelah looping
         if (request()->ajax()) {
             return response()->json(['status' => 'pending', 'message' => '❌ Tidak ada mutasi dengan nominal yang cocok.']);
         }
         return redirect()->route('invoice.show', $transaksi->id)->with('error', '❌ Tidak ada mutasi dengan nominal yang cocok.');
     } catch (\Exception $e) {
-        // Mengembalikan JSON untuk AJAX
         if (request()->ajax()) {
             return response()->json(['status' => 'error', 'message' => 'Gagal cek mutasi: ' . $e->getMessage()]);
         }
@@ -135,6 +158,5 @@ Route::get('/mutasi-manual/{id}', function ($id) {
     }
 })->name('mutasi.manual');
 
-// Tambahan untuk API, sebaiknya dihapus jika tidak digunakan
 Route::get('/create-payment', [\App\Http\Controllers\PaymentSettingController::class, 'createPayment']);
 Route::get('/cek-mutasi', [\App\Http\Controllers\PaymentSettingController::class, 'cekMutasi']);

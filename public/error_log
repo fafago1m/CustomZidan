@@ -1,0 +1,77 @@
+[09-Aug-2025 07:26:30 UTC] PHP Fatal error:  Composer detected issues in your platform: Your Composer dependencies require a PHP version ">= 8.2.0". You are running 7.4.33. in /home/gqvqqnnx/laravel_project/vendor/composer/platform_check.php on line 24
+[09-Aug-2025 07:26:32 UTC] PHP Fatal error:  Composer detected issues in your platform: Your Composer dependencies require a PHP version ">= 8.2.0". You are running 7.4.33. in /home/gqvqqnnx/laravel_project/vendor/composer/platform_check.php on line 24
+[09-Aug-2025 07:26:32 UTC] PHP Fatal error:  Composer detected issues in your platform: Your Composer dependencies require a PHP version ">= 8.2.0". You are running 7.4.33. in /home/gqvqqnnx/laravel_project/vendor/composer/platform_check.php on line 24
+[09-Aug-2025 07:26:33 UTC] PHP Fatal error:  Composer detected issues in your platform: Your Composer dependencies require a PHP version ">= 8.2.0". You are running 7.4.33. in /home/gqvqqnnx/laravel_project/vendor/composer/platform_check.php on line 24
+[09-Aug-2025 07:26:33 UTC] PHP Fatal error:  Composer detected issues in your platform: Your Composer dependencies require a PHP version ">= 8.2.0". You are running 7.4.33. in /home/gqvqqnnx/laravel_project/vendor/composer/platform_check.php on line 24
+[09-Aug-2025 07:26:34 UTC] PHP Fatal error:  Composer detected issues in your platform: Your Composer dependencies require a PHP version ">= 8.2.0". You are running 7.4.33. in /home/gqvqqnnx/laravel_project/vendor/composer/platform_check.php on line 24
+[09-Aug-2025 07:26:49 UTC] PHP Fatal error:  Composer detected issues in your platform: Your Composer dependencies require a PHP version ">= 8.2.0". You are running 7.4.33. in /home/gqvqqnnx/laravel_project/vendor/composer/platform_check.php on line 24
+[09-Aug-2025 07:26:52 UTC] PHP Fatal error:  Composer detected issues in your platform: Your Composer dependencies require a PHP version ">= 8.2.0". You are running 7.4.33. in /home/gqvqqnnx/laravel_project/vendor/composer/platform_check.php on line 24
+[09-Aug-2025 07:26:54 UTC] PHP Fatal error:  Composer detected issues in your platform: Your Composer dependencies require a PHP version ">= 8.2.0". You are running 7.4.33. in /home/gqvqqnnx/laravel_project/vendor/composer/platform_check.php on line 24
+[09-Aug-2025 07:26:54 UTC] PHP Fatal error:  Composer detected issues in your platform: Your Composer dependencies require a PHP version ">= 8.2.0". You are running 7.4.33. in /home/gqvqqnnx/laravel_project/vendor/composer/platform_check.php on line 24
+[09-Aug-2025 07:26:55 UTC] PHP Fatal error:  Composer detected issues in your platform: Your Composer dependencies require a PHP version ">= 8.2.0". You are running 7.4.33. in /home/gqvqqnnx/laravel_project/vendor/composer/platform_check.php on line 24
+[09-Aug-2025 07:26:55 UTC] PHP Fatal error:  Composer detected issues in your platform: Your Composer dependencies require a PHP version ">= 8.2.0". You are running 7.4.33. in /home/gqvqqnnx/laravel_project/vendor/composer/platform_check.php on line 24
+[09-Aug-2025 07:26:56 UTC] PHP Fatal error:  Composer detected issues in your platform: Your Composer dependencies require a PHP version ">= 8.2.0". You are running 7.4.33. in /home/gqvqqnnx/laravel_project/vendor/composer/platform_check.php on line 24
+[09-Aug-2025 07:26:56 UTC] PHP Fatal error:  Composer detected issues in your platform: Your Composer dependencies require a PHP version ">= 8.2.0". You are running 7.4.33. in /home/gqvqqnnx/laravel_project/vendor/composer/platform_check.php on line 24
+[09-Aug-2025 07:26:57 UTC] PHP Fatal error:  Composer detected issues in your platform: Your Composer dependencies require a PHP version ">= 8.2.0". You are running 7.4.33. in /home/gqvqqnnx/laravel_project/vendor/composer/platform_check.php on line 24
+[09-Aug-2025 07:34:19 UTC] PHP Warning:  readlink(): Invalid argument in /home/gqvqqnnx/laravel_project/public/link.php on line 2
+[09-Aug-2025 07:34:28 UTC] PHP Warning:  readlink(): Invalid argument in /home/gqvqqnnx/laravel_project/public/link.php on line 2
+[09-Aug-2025 07:34:29 UTC] PHP Warning:  readlink(): Invalid argument in /home/gqvqqnnx/laravel_project/public/link.php on line 2
+[09-Aug-2025 07:45:33 UTC] PHP Warning:  symlink(): No such file or directory in /home/gqvqqnnx/laravel_project/public/link.php on line 5
+[09-Aug-2025 07:45:59 UTC] PHP Warning:  symlink(): No such file or directory in /home/gqvqqnnx/laravel_project/public/link.php on line 5
+[09-Aug-2025 07:46:00 UTC] PHP Warning:  symlink(): No such file or directory in /home/gqvqqnnx/laravel_project/public/link.php on line 5
+[09-Aug-2025 07:46:55 UTC] PHP Warning:  Undefined variable $target in /home/gqvqqnnx/laravel_project/public/link.php on line 5
+[09-Aug-2025 07:46:55 UTC] PHP Deprecated:  symlink(): Passing null to parameter #1 ($target) of type string is deprecated in /home/gqvqqnnx/laravel_project/public/link.php on line 5
+[09-Aug-2025 07:46:55 UTC] PHP Warning:  symlink(): No such file or directory in /home/gqvqqnnx/laravel_project/public/link.php on line 5
+[09-Aug-2025 07:46:56 UTC] PHP Warning:  Undefined variable $target in /home/gqvqqnnx/laravel_project/public/link.php on line 5
+[09-Aug-2025 07:46:56 UTC] PHP Deprecated:  symlink(): Passing null to parameter #1 ($target) of type string is deprecated in /home/gqvqqnnx/laravel_project/public/link.php on line 5
+[09-Aug-2025 07:46:56 UTC] PHP Warning:  symlink(): No such file or directory in /home/gqvqqnnx/laravel_project/public/link.php on line 5
+[09-Aug-2025 07:46:56 UTC] PHP Warning:  Undefined variable $target in /home/gqvqqnnx/laravel_project/public/link.php on line 5
+[09-Aug-2025 07:46:56 UTC] PHP Deprecated:  symlink(): Passing null to parameter #1 ($target) of type string is deprecated in /home/gqvqqnnx/laravel_project/public/link.php on line 5
+[09-Aug-2025 07:46:56 UTC] PHP Warning:  symlink(): No such file or directory in /home/gqvqqnnx/laravel_project/public/link.php on line 5
+[09-Aug-2025 07:46:57 UTC] PHP Warning:  Undefined variable $target in /home/gqvqqnnx/laravel_project/public/link.php on line 5
+[09-Aug-2025 07:46:57 UTC] PHP Deprecated:  symlink(): Passing null to parameter #1 ($target) of type string is deprecated in /home/gqvqqnnx/laravel_project/public/link.php on line 5
+[09-Aug-2025 07:46:57 UTC] PHP Warning:  symlink(): No such file or directory in /home/gqvqqnnx/laravel_project/public/link.php on line 5
+[09-Aug-2025 07:46:57 UTC] PHP Warning:  Undefined variable $target in /home/gqvqqnnx/laravel_project/public/link.php on line 5
+[09-Aug-2025 07:46:57 UTC] PHP Deprecated:  symlink(): Passing null to parameter #1 ($target) of type string is deprecated in /home/gqvqqnnx/laravel_project/public/link.php on line 5
+[09-Aug-2025 07:46:57 UTC] PHP Warning:  symlink(): No such file or directory in /home/gqvqqnnx/laravel_project/public/link.php on line 5
+[09-Aug-2025 07:46:58 UTC] PHP Warning:  Undefined variable $target in /home/gqvqqnnx/laravel_project/public/link.php on line 5
+[09-Aug-2025 07:46:58 UTC] PHP Deprecated:  symlink(): Passing null to parameter #1 ($target) of type string is deprecated in /home/gqvqqnnx/laravel_project/public/link.php on line 5
+[09-Aug-2025 07:46:58 UTC] PHP Warning:  symlink(): No such file or directory in /home/gqvqqnnx/laravel_project/public/link.php on line 5
+[09-Aug-2025 07:46:58 UTC] PHP Warning:  Undefined variable $target in /home/gqvqqnnx/laravel_project/public/link.php on line 5
+[09-Aug-2025 07:46:58 UTC] PHP Deprecated:  symlink(): Passing null to parameter #1 ($target) of type string is deprecated in /home/gqvqqnnx/laravel_project/public/link.php on line 5
+[09-Aug-2025 07:46:58 UTC] PHP Warning:  symlink(): No such file or directory in /home/gqvqqnnx/laravel_project/public/link.php on line 5
+[09-Aug-2025 07:46:59 UTC] PHP Warning:  Undefined variable $target in /home/gqvqqnnx/laravel_project/public/link.php on line 5
+[09-Aug-2025 07:46:59 UTC] PHP Deprecated:  symlink(): Passing null to parameter #1 ($target) of type string is deprecated in /home/gqvqqnnx/laravel_project/public/link.php on line 5
+[09-Aug-2025 07:46:59 UTC] PHP Warning:  symlink(): No such file or directory in /home/gqvqqnnx/laravel_project/public/link.php on line 5
+[09-Aug-2025 07:47:27 UTC] PHP Warning:  Undefined variable $target in /home/gqvqqnnx/laravel_project/public/link.php on line 5
+[09-Aug-2025 07:47:27 UTC] PHP Deprecated:  symlink(): Passing null to parameter #1 ($target) of type string is deprecated in /home/gqvqqnnx/laravel_project/public/link.php on line 5
+[09-Aug-2025 07:47:27 UTC] PHP Warning:  symlink(): No such file or directory in /home/gqvqqnnx/laravel_project/public/link.php on line 5
+[09-Aug-2025 07:47:28 UTC] PHP Warning:  Undefined variable $target in /home/gqvqqnnx/laravel_project/public/link.php on line 5
+[09-Aug-2025 07:47:28 UTC] PHP Deprecated:  symlink(): Passing null to parameter #1 ($target) of type string is deprecated in /home/gqvqqnnx/laravel_project/public/link.php on line 5
+[09-Aug-2025 07:47:28 UTC] PHP Warning:  symlink(): No such file or directory in /home/gqvqqnnx/laravel_project/public/link.php on line 5
+[09-Aug-2025 07:47:28 UTC] PHP Warning:  Undefined variable $target in /home/gqvqqnnx/laravel_project/public/link.php on line 5
+[09-Aug-2025 07:47:28 UTC] PHP Deprecated:  symlink(): Passing null to parameter #1 ($target) of type string is deprecated in /home/gqvqqnnx/laravel_project/public/link.php on line 5
+[09-Aug-2025 07:47:28 UTC] PHP Warning:  symlink(): No such file or directory in /home/gqvqqnnx/laravel_project/public/link.php on line 5
+[09-Aug-2025 07:47:29 UTC] PHP Warning:  Undefined variable $target in /home/gqvqqnnx/laravel_project/public/link.php on line 5
+[09-Aug-2025 07:47:29 UTC] PHP Deprecated:  symlink(): Passing null to parameter #1 ($target) of type string is deprecated in /home/gqvqqnnx/laravel_project/public/link.php on line 5
+[09-Aug-2025 07:47:29 UTC] PHP Warning:  symlink(): No such file or directory in /home/gqvqqnnx/laravel_project/public/link.php on line 5
+[09-Aug-2025 07:47:29 UTC] PHP Warning:  Undefined variable $target in /home/gqvqqnnx/laravel_project/public/link.php on line 5
+[09-Aug-2025 07:47:29 UTC] PHP Deprecated:  symlink(): Passing null to parameter #1 ($target) of type string is deprecated in /home/gqvqqnnx/laravel_project/public/link.php on line 5
+[09-Aug-2025 07:47:29 UTC] PHP Warning:  symlink(): No such file or directory in /home/gqvqqnnx/laravel_project/public/link.php on line 5
+[09-Aug-2025 07:47:30 UTC] PHP Warning:  Undefined variable $target in /home/gqvqqnnx/laravel_project/public/link.php on line 5
+[09-Aug-2025 07:47:30 UTC] PHP Deprecated:  symlink(): Passing null to parameter #1 ($target) of type string is deprecated in /home/gqvqqnnx/laravel_project/public/link.php on line 5
+[09-Aug-2025 07:47:30 UTC] PHP Warning:  symlink(): No such file or directory in /home/gqvqqnnx/laravel_project/public/link.php on line 5
+[09-Aug-2025 08:37:43 UTC] PHP Warning:  symlink(): No such file or directory in /home/gqvqqnnx/laravel_project/public/link.php on line 8
+[09-Aug-2025 08:37:47 UTC] PHP Warning:  symlink(): No such file or directory in /home/gqvqqnnx/laravel_project/public/link.php on line 8
+[09-Aug-2025 08:39:25 UTC] PHP Warning:  symlink(): No such file or directory in /home/gqvqqnnx/laravel_project/public/link.php on line 8
+[09-Aug-2025 08:39:26 UTC] PHP Warning:  symlink(): No such file or directory in /home/gqvqqnnx/laravel_project/public/link.php on line 8
+[09-Aug-2025 08:40:56 UTC] PHP Warning:  symlink(): No such file or directory in /home/gqvqqnnx/laravel_project/public/link.php on line 8
+[09-Aug-2025 08:40:57 UTC] PHP Warning:  symlink(): No such file or directory in /home/gqvqqnnx/laravel_project/public/link.php on line 8
+[09-Aug-2025 08:40:57 UTC] PHP Warning:  symlink(): No such file or directory in /home/gqvqqnnx/laravel_project/public/link.php on line 8
+[09-Aug-2025 08:40:58 UTC] PHP Warning:  symlink(): No such file or directory in /home/gqvqqnnx/laravel_project/public/link.php on line 8
+[09-Aug-2025 08:40:58 UTC] PHP Warning:  symlink(): No such file or directory in /home/gqvqqnnx/laravel_project/public/link.php on line 8
+[09-Aug-2025 08:40:59 UTC] PHP Warning:  symlink(): No such file or directory in /home/gqvqqnnx/laravel_project/public/link.php on line 8
+[09-Aug-2025 08:40:59 UTC] PHP Warning:  symlink(): No such file or directory in /home/gqvqqnnx/laravel_project/public/link.php on line 8
+[09-Aug-2025 08:41:00 UTC] PHP Warning:  symlink(): No such file or directory in /home/gqvqqnnx/laravel_project/public/link.php on line 8
+[11-Aug-2025 06:59:09 UTC] PHP Warning:  symlink(): No such file or directory in /home/gqvqqnnx/laravel_project/public/link.php on line 8
+[11-Aug-2025 07:35:08 UTC] PHP Warning:  symlink(): No such file or directory in /home/gqvqqnnx/laravel_project/public/link.php on line 8

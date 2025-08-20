@@ -55,7 +55,7 @@ public function cekMutasi()
         return response()->json(['error' => 'Pengaturan belum lengkap.']);
     }
 
-    $url = "https://actressapi.vercel.app/orderkuota/mutasiqr?apikey=fafa1&username=fafagamin&token=1300158%3AAf2nKqxvLzFQHbU87JO5BWtiTr3D";
+    $url = "https://actressapi.vercel.app/orderkuota/mutasiqr?apikey={$setting->apikey}&username={$setting->username}&token={$setting->token}";
 
     try {
         $response = file_get_contents($url);
