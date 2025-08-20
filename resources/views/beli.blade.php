@@ -229,23 +229,14 @@
                                 @csrf
                                 <input type="hidden" name="produk_id" value="{{ $produk->id }}">
 
-                                <div>
-                                    <label for="nama" class="block text-sm font-medium text-gray-700 mb-1">Nama Lengkap</label>
-                                    <input type="text" id="nama" name="nama" required 
-                                            class="form-input w-full px-4 py-3 rounded-lg border focus:ring-2 focus:ring-indigo-500">
+                                <div class="bg-indigo-50 dark:bg-slate-700 p-4 rounded-lg">
+                                    <p class="text-sm text-indigo-800 dark:text-indigo-200">Anda membeli sebagai: <strong>{{ Auth::user()->name }}</strong> ({{ Auth::user()->email }})</p>
                                 </div>
 
                                 <div>
-                                    <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email (opsional)</label>
-                                    <input type="email" id="email" name="email" 
-                                            class="form-input w-full px-4 py-3 rounded-lg border focus:ring-2 focus:ring-indigo-500">
-                                </div>
-
-                                <div>
-                                    <label for="no_wa" class="block text-sm font-medium text-gray-700 mb-1">Nomor WhatsApp</label>
-                                    <input type="text" id="no_wa" name="no_wa" required 
-                                            class="form-input w-full px-4 py-3 rounded-lg border focus:ring-2 focus:ring-indigo-500">
-                                    <p class="mt-1 text-sm text-gray-500">Kami akan mengirim detail pembelian melalui WhatsApp</p>
+                                    <label for="promo_code" class="block text-sm font-medium text-gray-700 mb-1">Kode Promo (opsional)</label>
+                                    <input type="text" id="promo_code" name="promo_code"
+                                            class="form-input w-full px-4 py-3 rounded-lg border focus:ring-2 focus:ring-indigo-500" placeholder="Masukkan kode promo">
                                 </div>
 
                                 <div class="flex items-center space-x-4">

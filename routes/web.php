@@ -2,7 +2,11 @@
 
 use App\Models\PaymentSetting;
 use App\Models\Produk;
+use App\Models\PromoCode;
 use App\Models\Transaksi;
+use App\Models\User;
+use App\Notifications\NewSaleNotification;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -39,67 +43,122 @@ Route::get('/', function () {
     return view('welcome', compact('produks'));
 })->name('home');
 
-Route::get('/beli/{id}', function ($id) {
-    $produk = Produk::findOrFail($id);
-    return view('beli', compact('produk'));
-})->name('beli.produk');
+// Public routes
+Auth::routes();
 
-Route::post('/beli', function (Request $request) {
-    $request->validate([
-        'nama' => 'required',
-        'email' => 'nullable|email',
-        'no_wa' => 'required',
-        'produk_id' => 'required|exists:produks,id',
-    ]);
+Route::middleware(['auth'])->group(function () {
+    Route::get('/beli/{id}', function ($id) {
+        $produk = Produk::findOrFail($id);
+        return view('beli', compact('produk'));
+    })->name('beli.produk');
 
-    $produk = Produk::findOrFail($request->produk_id);
-    $kodeUnik = rand(1, 99); // kode unik random
-    $amount = $produk->harga + $kodeUnik;
+    Route::post('/beli', function (Request $request) {
+        $request->validate([
+            'produk_id' => 'required|exists:produks,id',
+            'promo_code' => 'nullable|string|exists:promo_codes,code',
+        ]);
 
-    // Buat transaksi
-    $transaksi = Transaksi::create([
-        'nama' => $request->nama,
-        'email' => $request->email,
-        'no_wa' => $request->no_wa,
-        'produk_id' => $produk->id,
-        'status' => 'pending',
-        'amount' => $amount,
-        'kode_unik' => $kodeUnik,
-    ]);
+        $produk = Produk::findOrFail($request->produk_id);
 
-    // Request pembayaran (sekali saja)
-    $setting = PaymentSetting::first();
-    $paymentResponse = null;
-
-    if ($setting && $setting->apikey && $setting->codeqr) {
-        $apikey = urlencode($setting->apikey);
-        $amountEncoded = urlencode($amount);
-        $codeqrEncoded = urlencode($setting->codeqr);
-
-        $url = "https://apiku-fafa-main.vercel.app/api/orkut/createpayment?apikey=apikeyfafa1&amount={$amountEncoded}&codeqr=00020101021126670016COM.NOBUBANK.WWW01189360050300000879140214823323798771130303UMI51440014ID.CO.QRIS.WWW0215ID20243345208120303UMI5204541153033605802ID5925YULIASARI%20STORE%20OK17633726007BANDUNG61054011162070703A0163048BA9";
-
-        try {
-            $response = curlGet($url);
-            $paymentResponse = json_decode($response, true);
-        } catch (\Exception $e) {
-            $paymentResponse = ['error' => 'Gagal request pembayaran: ' . $e->getMessage()];
+        // Cek stok
+        if ($produk->stock <= 0) {
+            return back()->withErrors(['stock' => 'Stok produk habis.']);
         }
-    }
 
-    // Simpan ke session (sementara)
-    Session::flash('payment', $paymentResponse);
+        $kodeUnik = rand(1, 99); // kode unik random
+        $originalAmount = $produk->harga;
+        $discount = 0;
 
-    return redirect()->route('invoice.show', $transaksi->id);
-})->name('beli.submit');
+        // Validasi dan terapkan kode promo
+        if ($request->promo_code) {
+            $promoCode = PromoCode::where('code', $request->promo_code)->first();
 
-Route::get('/invoice/{id}', function ($id) {
-    $transaksi = Transaksi::with('produk')->findOrFail($id);
-    $payment = Session::get('payment'); // Ambil hanya dari session agar tidak request ulang
+            if (!$promoCode) {
+                return back()->withErrors(['promo_code' => 'Kode promo tidak valid.']);
+            }
+            if ($promoCode->expires_at && $promoCode->expires_at->isPast()) {
+                return back()->withErrors(['promo_code' => 'Kode promo sudah kedaluwarsa.']);
+            }
+            if ($promoCode->usage_limit !== null && $promoCode->times_used >= $promoCode->usage_limit) {
+                return back()->withErrors(['promo_code' => 'Kode promo sudah mencapai batas penggunaan.']);
+            }
 
-    return view('invoice', compact('transaksi', 'payment'));
-})->name('invoice.show');
+            if ($promoCode->type === 'percentage') {
+                $discount = ($promoCode->value / 100) * $originalAmount;
+            } else {
+                $discount = $promoCode->value;
+            }
 
-Route::get('/mutasi-manual/{id}', function ($id) {
+            $promoCode->increment('times_used');
+        }
+
+        $finalAmount = ($originalAmount - $discount) + $kodeUnik;
+        if ($finalAmount < 0) {
+            $finalAmount = 0;
+        }
+
+        $user = Auth::user();
+
+        // Buat transaksi
+        $transaksi = Transaksi::create([
+            'user_id' => $user->id,
+            'nama' => $user->name,
+            'email' => $user->email,
+            'no_wa' => $user->no_wa ?? '0', // Assuming user has a no_wa field
+            'produk_id' => $produk->id,
+            'status' => 'pending',
+            'amount' => $finalAmount,
+            'kode_unik' => $kodeUnik,
+        ]);
+
+        // Kurangi stok
+        $produk->decrement('stock');
+
+        // Kirim notifikasi
+        $admins = User::role('admin')->get();
+        $reseller = $produk->user;
+        $recipients = $admins->merge(collect([$reseller]))->unique('id');
+
+        Notification::send($recipients, new NewSaleNotification($transaksi));
+
+        // Request pembayaran (sekali saja)
+        $setting = PaymentSetting::first();
+        $paymentResponse = null;
+
+        if ($setting && $setting->apikey && $setting->codeqr) {
+            $apikey = urlencode($setting->apikey);
+            $amountEncoded = urlencode($amount);
+            $codeqrEncoded = urlencode($setting->codeqr);
+
+            $url = "https://apiku-fafa-main.vercel.app/api/orkut/createpayment?apikey=apikeyfafa1&amount={$amountEncoded}&codeqr=00020101021126670016COM.NOBUBANK.WWW01189360050300000879140214823323798771130303UMI51440014ID.CO.QRIS.WWW0215ID20243345208120303UMI5204541153033605802ID5925YULIASARI%20STORE%20OK17633726007BANDUNG61054011162070703A0163048BA9";
+
+            try {
+                $response = curlGet($url);
+                $paymentResponse = json_decode($response, true);
+            } catch (\Exception $e) {
+                $paymentResponse = ['error' => 'Gagal request pembayaran: ' . $e->getMessage()];
+            }
+        }
+
+        // Simpan ke session (sementara)
+        Session::flash('payment', $paymentResponse);
+
+        return redirect()->route('invoice.show', $transaksi->id);
+    })->name('beli.submit');
+
+    Route::get('/invoice/{id}', function ($id) {
+        $transaksi = Transaksi::with('produk')->where('id', $id)->where('user_id', Auth::id())->firstOrFail();
+        $payment = Session::get('payment'); // Ambil hanya dari session agar tidak request ulang
+
+        return view('invoice', compact('transaksi', 'payment'));
+    })->name('invoice.show');
+
+    Route::get('/my-transactions', function() {
+        $transaksis = Transaksi::where('user_id', Auth::id())->latest()->paginate(10);
+        return view('my-transactions', compact('transaksis'));
+    })->name('my.transactions');
+
+    Route::get('/mutasi-manual/{id}', function ($id) {
     $transaksi = Transaksi::findOrFail($id);
     $setting = PaymentSetting::first();
 
