@@ -14,14 +14,16 @@ class Transaksi extends Model
 
 
 protected $fillable = [
+    'user_id', // tambahkan ini
     'nama',
     'email',
     'no_wa',
     'produk_id',
     'status',
     'kode_unik',
-    'amount', // <--- ini penting!
+    'amount',
 ];
+
 
 
 }

@@ -99,15 +99,15 @@ Route::middleware(['auth'])->group(function () {
 
         // Buat transaksi
         $transaksi = Transaksi::create([
-            'user_id'   => $user->id,
-            'nama'      => $user->name,
-            'email'     => $user->email,
-            'no_wa'     => $user->no_wa ?? '0',
-            'produk_id' => $produk->id,
-            'status'    => 'pending',
-            'amount'    => $finalAmount,
-            'kode_unik' => $kodeUnik,
-        ]);
+    'user_id'   => Auth::id(), // wajib ada
+    'nama'      => $user->name,
+    'email'     => $user->email,
+    'no_wa'     => $user->no_wa ?? '0',
+    'produk_id' => $produk->id,
+    'status'    => 'pending',
+    'amount'    => $finalAmount,
+    'kode_unik' => $kodeUnik,
+]);
 
         // Kurangi stok
         $produk->decrement('stock');
@@ -153,7 +153,6 @@ Route::middleware(['auth'])->group(function () {
     })->name('beli.submit');
 
     Route::get('/invoice/{id}', function ($id) {
-    try {
         $transaksi = Transaksi::with('produk')
             ->where('id', $id)
             ->where('user_id', Auth::id())
@@ -162,15 +161,7 @@ Route::middleware(['auth'])->group(function () {
         $payment = Session::get('payment');
 
         return view('invoice', compact('transaksi', 'payment'));
-    } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
-        return redirect()->route('my.transactions')
-            ->with('error', '❌ Transaksi tidak ditemukan atau bukan milik Anda.');
-    } catch (\Exception $e) {
-        return redirect()->route('my.transactions')
-            ->with('error', '❌ Terjadi kesalahan: ' . $e->getMessage());
-    }
-})->name('invoice.show');
-
+    })->name('invoice.show');
 
     Route::get('/my-transactions', function () {
         $transaksis = Transaksi::where('user_id', Auth::id())->latest()->paginate(10);
@@ -236,3 +227,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/create-payment', [\App\Http\Controllers\PaymentSettingController::class, 'createPayment']);
     Route::get('/cek-mutasi', [\App\Http\Controllers\PaymentSettingController::class, 'cekMutasi']);
 });
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

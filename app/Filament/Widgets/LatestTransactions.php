@@ -42,7 +42,7 @@ class LatestTransactions extends BaseWidget
         $query = Transaksi::query()->latest()->limit(5);
         $user = Auth::user();
 
-        if ($user->hasRole('resseler')) {
+        if ($user->hasRole('reseller')) {
             $query->whereHas('produk', function (Builder $q) use ($user) {
                 $q->where('user_id', $user->id);
             });

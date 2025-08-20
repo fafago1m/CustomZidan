@@ -91,7 +91,7 @@ class TransaksiResource extends Resource
     {
         $query = parent::getEloquentQuery();
 
-        if (Auth::user()->hasRole('resseler')) {
+        if (Auth::user()->hasRole('reseller')) {
             $query->whereHas('produk', function (Builder $query) {
                 $query->where('user_id', Auth::id());
             });
