@@ -181,6 +181,18 @@
                     </h1>
                     <p class="text-gray-500 mt-1">#{{ $transaksi->id }}</p>
                 </div>
+                @if (session('error'))
+    <div class="alert alert-danger">
+        {{ session('error') }}
+    </div>
+@endif
+
+@if (session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
+
                 <div class="text-right">
                     @if ($transaksi->status === 'pending')
                         <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-amber-100 text-amber-800" id="statusPayment">
